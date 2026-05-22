@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+test/
+test2/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Mac
+.DS_Store
+
+# Models
+*.h5
+*.bin
+*.safetensors
+
+# Cache
+.cache/
+
+
+
+
+
+
+
+
+
+
