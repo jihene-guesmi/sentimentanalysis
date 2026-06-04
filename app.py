@@ -125,7 +125,7 @@ if st.button("Predict"):
             else:
                 st.error("Negative")
 
-            # BERT
+            # BERt
             probs = predict_bert(text)
             label = np.argmax(probs)
 
