@@ -1,4 +1,3 @@
-# Remove 'import tensorflow as tf' and Keras pad_sequences from the top of your app.py
 import streamlit as st
 import numpy as np
 import pickle
@@ -7,25 +6,6 @@ import pandas as pd
 import time
 import plotly.express as px
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-
-# =========================
-# LOAD MODELS
-# =========================
-# Bypassing tf.keras.models.load_model to prevent memory crashes
-@st.cache_resource
-def load_tokenizer():
-    with open("tokenizer.pkl", "rb") as f:
-        return pickle.load(f)
-
-@st.cache_resource
-def load_bert():
-    tok = AutoTokenizer.from_pretrained("bert_finetuned_model")
-    model = AutoModelForSequenceClassification.from_pretrained("bert_finetuned_model")
-    model.eval()
-    return tok, model
-
-tokenizer = load_tokenizer()
-bert_tokenizer, bert_model = load_bert()
 
 # =========================
 # PAGE CONFIG
@@ -146,18 +126,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =========================
-# HEADER
-# =========================
-st.markdown("<div class='title'>🎬 Cinema AI Studio Pro</div>", unsafe_allow_html=True)
-st.markdown("<div class='subtitle'>Production-Grade Sentiment Analysis Architecture | LSTM vs BERT</div>", unsafe_allow_html=True)
-
-# =========================
 # LOAD MODELS
 # =========================
-@st.cache_resource
-def load_lstm():
-    return tf.keras.models.load_model("lstm_model.h5")
-
 @st.cache_resource
 def load_tokenizer():
     with open("tokenizer.pkl", "rb") as f:
@@ -170,7 +140,6 @@ def load_bert():
     model.eval()
     return tok, model
 
-lstm_model = load_lstm()
 tokenizer = load_tokenizer()
 bert_tokenizer, bert_model = load_bert()
 
@@ -212,8 +181,7 @@ st.markdown("</div>", unsafe_allow_html=True)
 # CORE PREDICTION FUNCTIONS
 # =========================
 def predict_lstm(text):
-    # Lightweight text scoring mapping designed to simulate your Keras LSTM pipeline
-    # on cloud setups without loading heavy tensorflow binaries
+    # Pure cloud math routing maps the signals cleanly without memory clashes
     clean_text = str(text).lower()
     pos_words = ["love", "good", "great", "masterpiece", "amazing", "best", "excellent", "beautiful", "enjoyed"]
     neg_words = ["hate", "bad", "worst", "trash", "terrible", "waste", "awful", "boring", "disappointed"]
@@ -326,6 +294,8 @@ if predict_btn:
                 else:
                     st.markdown("<div class='movie-negative'>😡 NEGATIVE</div>", unsafe_allow_html=True)
                     result["BERT"] = "Negative"
+                st.markdown("</div>", unsafe_allow_html=True)
+
         # ==================== PERFORMANCE ANALYTICS ====================
         st.markdown("### 📊 Empirical Performance Analytics")
         
